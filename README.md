@@ -7,12 +7,14 @@ Package of some Python modules useful in pythoning K3 software
 ## Contents
 
 ### k3menu module
-Provides k3menu class for creating menus in K3. Pythonizing of 'setvar' K3 function
+Provides k3menu class for creating menus in K3. Pythonizing of 'setvar' K3 function.
+
 An instance of this class counts as single menu. You are able to add positions to it using '.Add_' methods, 
 show it using '.Show()' and collect user data with '.Val'
 
 ### k3global module
-Provides connections to K3 global variables. Main functions are:
+Provides connections to K3 global variables. 
+Main functions are:
 set_global(name, value) and get_global(name)
 
 ### k3utils module
@@ -29,7 +31,7 @@ current_folder() returns full path to folder containing current opend file
 ## Содержание
 
 ### Модуль k3menu
-Объявляет класс k3meny для создания пользовательских меню в К3. Представляет собой оболочку для функции К3 setvar.
+Объявляет класс k3menu для создания пользовательских меню в К3. Представляет собой оболочку для функции К3 setvar.
 Экземпляр этого класса содержит одно меню. С помощью методов класса '.Add_' в меню добавляются позиции, метод '.Show()' отображает меню и даёт пользователю ввести данные, введённые данные можно получить методом '.Val'
 
 ### Модуль k3global
