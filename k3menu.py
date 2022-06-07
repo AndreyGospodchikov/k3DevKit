@@ -83,37 +83,9 @@ class k3menu:
                 # -- Заполнение для типа string
                 param.extend([k3.k_string, k3.k_auto, k3.k_default, self.Def(currname)])
 
-            if self.Type(currname) == 'string 1':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 1, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 2':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 2, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 3':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 3, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 4':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 4, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 5':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 5, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 6':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 6, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 7':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 7, k3.k_default, self.Def(currname)])
-
-            if self.Type(currname) == 'string 8':
-                # -- Заполнение для типа string
-                param.extend([k3.k_string, k3.k_button, 8, k3.k_default, self.Def(currname)])
+            if self.Type(currname).startswith('string') and len(self.Type(currname)) == 8:
+                # -- Заполнение для string с типом
+                param.extend([k3.k_string, k3.k_button, int(self.Type(currname[-1])), k3.k_default, self.Def(currname)])
 
             if self.Type(currname) == 'stringlist':
                 # -- Заполнение для типа stringlist
