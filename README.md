@@ -15,13 +15,23 @@ show it using '.Show()' and collect user data with '.Val'
 ### k3global module
 Provides connections to K3 global variables. 
 Main functions are:
-set_global(name, value) and get_global(name)
+set_global and get_global
 
 ### k3utils module
 Provides various useful functions
-check_furntype(object, target) checking if object is of target kind via furntype attribute
+
+check_furntype check if object is of target kind via furntype attribute
+
 msgwin creates simple window with user defined caption, text and text on single button
-current_folder() returns full path to folder containing current opend file
+
+current_folder returns full path to folder containing current opened file
+
+### k3decor module
+Provides function decorators useful in k3:
+
+rec_undo wraps function into single undo command with specified name
+
+snap - creates special set of snap settings for this function 
 
 Русский
 ---
@@ -36,11 +46,22 @@ current_folder() returns full path to folder containing current opend file
 
 ### Модуль k3global
 Позволяет работать с глобальными перемнными К3. Основные функции:
-set_global(name, value) и get_global(name)
+set_global и get_global
 
 ### Модуль k3utils
 Содержит различные полезные функции
-check_furntype(object, target) проверяет, относится ли объект к типу target, по значению его атрибута furntype
+
+check_furntype проверяет, относится ли объект к типу target, по значению его атрибута furntype
+
 msgwin создаёт простое окно с заголовком, текстом и подписью кнопки для закрытия
+
 errwin создаёт окошко с заголовком "Ошибка" и кнопкой "Ок"
-current_folder() возвращает полный путь к папке, в которой находится текущий открытый файл
+
+current_folder возвращает полный путь к папке, в которой находится текущий открытый файл
+
+### Модуль k3decor
+Содержит декораторы для К3
+
+rec_undo записывает всю функцию в одну позицию откатки с заданным именем
+
+snap создаёт для функции выделенные настройки привязки и т.д.
