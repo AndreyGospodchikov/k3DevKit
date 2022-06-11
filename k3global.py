@@ -1,11 +1,11 @@
 # coding=cp1251
 
-'''Модуль для работы с глобальными переменными'''
+"""Модуль для работы с глобальными переменными"""
 import k3
 
 
 def set_global(nam, val):
-    ''' Присваиваем глобальной переменной nam значение val возвращаем 1, если получилось'''
+    """ Присваиваем глобальной переменной nam значение val возвращаем 1, если получилось"""
     if type(nam) == str:
         tempvar = k3.GlobalVar(nam)
         tempvar.value = val
@@ -15,7 +15,7 @@ def set_global(nam, val):
 
 
 def get_global(nam):
-    ''' Возвращает значение из глобальной переменной с именем nam или None, если такой переменной не было'''
+    """ Возвращает значение из глобальной переменной с именем nam или None, если такой переменной не было"""
     tempvar = k3.GlobalVar(nam)
     if k3.isvardef(nam) > 0:
         return tempvar.value
@@ -24,7 +24,7 @@ def get_global(nam):
 
 
 def set_global_arr(name_, values_):
-    '''Присваиваем глобальному массиву с именем name_ значения из списка values_, возвращает количество заполненных'''
+    """Присваиваем глобальному массиву с именем name_ значения из списка values_, возвращает количество заполненных"""
     temparr = k3.GlobalVarArray(len(values_), name_)
     for posit in range(min(len(temparr), len(values_))):
         temparr[posit].value = values_[posit]
