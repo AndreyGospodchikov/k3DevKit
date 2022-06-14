@@ -116,39 +116,27 @@ class k3menu:
 
     def Add_Real(self, nam='', pr='', d=0):
         """ ƒобавл€ет позицию с переменной real именем nam, подсказкой pr и умолчанием d """
-        if not self.Can_Add(nam):
-            return 0
-        self.names.append(nam)
-        self.content[nam] = ['real', k3.Var(), d, pr]
-        self.Setdef(nam, d)
-        return 1
+        return self.Add_Simple('real', nam, pr, d)
 
     def Add_Logical(self, nam='', pr='', d=0):
-        """ ƒобавл€ет позицию с переменной logical """
-        if not self.Can_Add(nam):
-            return 0
-        self.names.append(nam)
-        self.content[nam] = ['logical', k3.Var(), d, pr]
-        self.Setdef(nam, d)
-        return 1
+        return self.Add_Simple('logical', nam, pr, d)
 
     def Add_String(self, nam='', pr='', d=''):
         """ ƒобавл€ет позицию с переменной string """
-        if not self.Can_Add(nam):
-            return 0
-        self.names.append(nam)
-        self.content[nam] = ['string', k3.Var(), d, pr]
-        self.Setdef(nam, d)
-        return 1
+        return self.Add_Simple('string', nam, pr, d)
 
     def Add_Button(self, nam=''):
         """ ƒобавл€ет разделительную линию """
+        return self.Add_Simple('button', nam, '  ', 0)
+
+    def Add_Simple(self, type, nam='', pr='', d=''):
         if not self.Can_Add(nam):
             return 0
         self.names.append(nam)
-        self.content[nam] = ['button', k3.Var(), 0, '  ']
-        self.Setdef(nam, 0)
+        self.content[nam] = [type, k3.Var(), d, pr]
+        self.Setdef(nam, d)
         return 1
+
 
     def Add_String_Code(self, nam='', pr='', d='', cod=0):
         """ќбработка специальных string с номерами. в cod хранитс€ код"""
@@ -158,7 +146,6 @@ class k3menu:
         if (cod > 0) and (cod < 8):
             self.content[nam] = ['string ' + str(int(cod)), k3.Var(), d, pr]
             self.Setdef(nam, d)
-
         elif cod == 8:
             # «апрос нескольких файлов дл€ открыти€
             self.content[nam] = ['string 8', k3.VarArray(100), d, pr]
@@ -193,7 +180,8 @@ class k3menu:
         return self.content[nam][2]
 
     def Val(self, nam):
-        """ ¬озвращает значение у позиции nam. ≈сли меню не запускалось, возвращает умолчание если имени нет, возвращает 0 """
+        """ ¬озвращает значение у позиции nam.
+        ≈сли меню не запускалось, возвращает умолчание если имени нет, возвращает 0 """
         if not self.Is_Exist(nam):
             return 0
         return self.content[nam][1].value
