@@ -85,7 +85,7 @@ class k3menu:
 
             if self.Type(currname).startswith('string') and len(self.Type(currname)) == 8:
                 # -- Заполнение для string с типом
-                param.extend([k3.k_string, k3.k_button, int(self.Type(currname[-1])), k3.k_default, self.Def(currname)])
+                param.extend([k3.k_string, k3.k_button, int(self.Type(currname)[-1]), k3.k_default, self.Def(currname)])
 
             if self.Type(currname) == 'stringlist':
                 # -- Заполнение для типа stringlist
@@ -136,7 +136,6 @@ class k3menu:
         self.content[nam] = [type, k3.Var(), d, pr]
         self.Setdef(nam, d)
         return 1
-
 
     def Add_String_Code(self, nam='', pr='', d='', cod=0):
         """Обработка специальных string с номерами. в cod хранится код"""
