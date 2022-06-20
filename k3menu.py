@@ -312,7 +312,7 @@ class k3menu:
         if not (self.Type(nam) == 'reallistonly' or self.Type(nam) == 'stringlistonly'):
             self.content[nam][1].value = d
         else:
-            self.content[nam][1].value = self.List[d]
+            self.content[nam][1].value = self.List(nam)[d]
         return 1
 
 
