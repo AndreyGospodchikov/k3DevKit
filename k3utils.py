@@ -45,3 +45,13 @@ def current_folder():
     for entry in path_list:
         result = result + entry + '\\'
     return result[0:-1]
+
+
+def materials_from_subst(subst):
+    """¬озвращает список с номерами материалов номенклатуры из заданной группы подстановки"""
+    result = []
+    arr = k3.VarArray(1, 'arr')
+    items_number = k3.npgetbywgere(1, '', 'arr', subst)
+    for member in arr:
+        result.append(int(member.Val))
+    return result
