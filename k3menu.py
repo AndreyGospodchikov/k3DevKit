@@ -316,6 +316,61 @@ class k3menu:
         return 1
 
 
+class k3picbox:
+    """Класс для меню из картинок
+    Методы класса:
+        Add_Item(caption, picture) - Добавляет пункт меню
+        Add_Folder(folder) - Добавляет путь к папкам с картнками. Все картинки будут искаться в этой папке
+        Check_Contents() - Выводит в консоль пары caption, picture. Картинки с учётом заданной папки
+        Show() - Выводит меню в К3 и возвращает номер выбранного пункта или 0, если нажата отмена или не заданы пункты
+        """
+
+    def __init__(self, caption='', default=1, text_pos='left'):
+        self.caption = caption
+        self.default = default
+        self.text = []
+        self.text_pos = k3.k_left
+        if text_pos == 'center':
+            self.text_pos = k3.k_center
+        elif text_pos == 'right':
+            self.text_pos = k3.k_right
+        self.picture_folder = ''
+        self.items = []
+
+    def Show(self):
+        """Выводит меню, возвращает номер выбранного пункта или 0, если нажата Отмена"""
+        if len(self.items) == 0:
+            return 0
+        cmdpar = [self.caption, k3.k_picbox, k3.k_default, self.default]
+        if len(self.text) > 0:
+            cmdpar.append(k3.k_text)
+            cmdpar.append(self.text_pos)
+            cmdpar.extend(self.text)
+            cmdpar.append(k3.k_done)
+        for item in self.items:
+            caption = item[0]
+            picture = self.picture_folder+item[1]
+            cmdpar.append(caption)
+            cmdpar.append(picture)
+        cmdpar.append(k3.k_done)
+        return k3.alternative(cmdpar)
+
+    def Add_Item(self, caption='', picture=''):
+        """Добавляет позицию в меню, принимает
+        caption - строка подсказки к пункту меню
+        picture - полный путь к картинке пункта меню"""
+        self.items.append(caption)
+        self.items.append(picture)
+
+    def Check_Contents(self):
+        """Выводит пары подсказок и картинок в меню"""
+        for item in self.items:
+            print(item[0], self.picture_folder+item[1])
+
+    def Add_Folder(self, folder=''):
+        self.picture_folder = folder
+
+
 if __name__ == '__main__':
     men = k3menu('Я окошко', '', k3.k_left, 'Я менюшко')
     men.Add_Real('real1', 'Первое число', 100)
