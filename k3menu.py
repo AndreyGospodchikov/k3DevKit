@@ -321,6 +321,7 @@ class k3picbox:
     Методы класса:
         Add_Item(caption, picture) - Добавляет пункт меню
         Add_Folder(folder) - Добавляет путь к папкам с картнками. Все картинки будут искаться в этой папке
+        Add_Text(text) - Добавляет строку или строки (если передан список или кортеж) в окно меню
         Check_Contents() - Выводит в консоль пары caption, picture. Картинки с учётом заданной папки
         Show() - Выводит меню в К3 и возвращает номер выбранного пункта или 0, если нажата отмена или не заданы пункты
         """
@@ -369,6 +370,13 @@ class k3picbox:
 
     def Add_Folder(self, folder=''):
         self.picture_folder = folder
+
+    def Add_Text(self, text):
+        """Добавляет строку из строки text, или построчно элементы списка text в пояснительный текст меню"""
+        if isinstance(text, str):
+            self.text.append(text)
+        elif isinstance(text, list) or isinstance(text, tuple):
+            self.text.extend(text)
 
 
 if __name__ == '__main__':
