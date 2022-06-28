@@ -12,6 +12,11 @@ Provides k3menu class for creating menus in K3. Pythonizing of 'setvar' K3 funct
 An instance of this class counts as single menu. You are able to add positions to it using '.Add_' methods, 
 show it using '.Show()' and collect user data with '.Val'
 
+Privides k3picbox class for picbox menu for K3.
+
+An instance of this class counts as single menu. You are able to add items to it using '.Add_Item' method and
+show it using '.Show()'
+
 ### k3global module
 Provides connections to K3 global variables. 
 Main functions are:
@@ -42,7 +47,12 @@ snap - creates special set of snap settings for this function
 
 ### Модуль k3menu
 Объявляет класс k3menu для создания пользовательских меню в К3. Представляет собой оболочку для функции К3 setvar.
+
 Экземпляр этого класса содержит одно меню. С помощью методов класса '.Add_' в меню добавляются позиции, метод '.Show()' отображает меню и даёт пользователю ввести данные, введённые данные можно получить методом '.Val'
+
+Также объявляет класс k3picbox для picbox=меню в К3.
+
+Экземпляр класса - одно меню. Метод Add_Item добавляет пункт в меню, метод Show() показывает меню и возвращает результат выбора.
 
 ### Модуль k3global
 Позволяет работать с глобальными перемнными К3. Основные функции:
