@@ -55,3 +55,9 @@ def materials_from_subst(subst):
     for member in arr:
         result.append(int(member.Val))
     return result
+
+
+def print_name(object):
+    name = k3.getattr(object, 'ElemName', 'No ElemName')
+    print(name)
+    
