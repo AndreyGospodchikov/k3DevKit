@@ -354,14 +354,13 @@ class k3picbox:
             cmdpar.append(caption)
             cmdpar.append(picture)
         cmdpar.append(k3.k_done)
-        return k3.alternative(cmdpar)
+        return int(k3.alternative(cmdpar)[0])
 
     def Add_Item(self, caption='', picture=''):
         """Добавляет позицию в меню, принимает
         caption - строка подсказки к пункту меню
         picture - полный путь к картинке пункта меню"""
-        self.items.append(caption)
-        self.items.append(picture)
+        self.items.append([caption, picture])
 
     def Check_Contents(self):
         """Выводит пары подсказок и картинок в меню"""

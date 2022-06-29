@@ -6,7 +6,7 @@ import k3
 
 def set_global(nam, val):
     """ Присваиваем глобальной переменной nam значение val возвращаем 1, если получилось"""
-    if type(nam) == str:
+    if type(nam) == str and not len(nam) > 12:
         tempvar = k3.GlobalVar(nam)
         tempvar.value = val
         return 1
@@ -21,6 +21,15 @@ def get_global(nam):
         return tempvar.value
     else:
         return None
+
+
+def get_global_list(names):
+    """Получает список имён, возвращает список значений глобальных переменных в том же порядке"""
+    result = []
+    for name_ in names:
+        print(name_)
+        result.append(get_global(name_))
+    return result
 
 
 def set_global_arr(name_, values_):

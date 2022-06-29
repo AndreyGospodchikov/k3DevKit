@@ -53,11 +53,10 @@ def materials_from_subst(subst):
     arr = k3.VarArray(1, 'arr')
     items_number = k3.npgetbywgere(1, '', 'arr', subst)
     for member in arr:
-        result.append(int(member.Val))
+        result.append(int(member.value))
     return result
 
 
 def print_name(object):
     name = k3.getattr(object, 'ElemName', 'No ElemName')
     print(name)
-    
