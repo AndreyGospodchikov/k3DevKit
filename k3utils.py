@@ -58,5 +58,36 @@ def materials_from_subst(subst):
 
 
 def print_name(object):
+    """Возвращает содержимое атрибута ElemName объекта"""
     name = k3.getattr(object, 'ElemName', 'No ElemName')
     print(name)
+
+
+def select_to_list():
+    """Возвращает список из объектов, которые были выбраны через select"""
+    result = []
+    for selnum in range(int(k3.sysvar(61))):
+        result.append(k3.getselnum(selnum+1))
+    return result
+
+
+def body_select(body, stayblink=0, partly=0, byattr=0, filter=''):
+    """Возвращает список объектов, имеющих общие точки с заданным телом
+        body - тело
+        stayblink, partly - режимы для выбора
+        byattr - выбор с фильтром по атрибутам
+        filter - строка с фильтром по атрибутам"""
+    select_parameters = []
+    if stayblink:
+        select_parameters.append(k3.k_stayblink)
+    if partly:
+        select_parameters.append(k3.k_partly)
+    select_parameters.extend([k3.k_all, k3.k_done])
+    if not byattr:
+        k3.select(select_parameters)
+    else:
+        byattr_parameters = [filter]
+        byattr_parameters.extend(select_parameters)
+        k3.selbyattr(byattr_parameters)
+    selected_list = select_to_list()
+    return [obj for obj in selected_list if k3.distance(k3.k_object, body, k3.k_object, obj) == 0]
