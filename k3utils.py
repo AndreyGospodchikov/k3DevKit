@@ -52,6 +52,8 @@ def materials_from_subst(subst):
     result = []
     arr = k3.VarArray(1, 'arr')
     items_number = k3.npgetbywgere(1, '', 'arr', subst)
+    arr = k3.VarArray(int(items_number), 'arr')
+    items_number = k3.npgetbywgere(1, '', 'arr', subst)
     for member in arr:
         result.append(int(member.value))
     return result
