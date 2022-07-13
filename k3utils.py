@@ -130,3 +130,23 @@ def attach_attributes(object, attributes):
                 else:
                     k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
 
+
+def check_band(panel):
+    """ѕолучает панель, возвращает список номеров и букв закромлЄнных сторон и углов"""
+    result = []
+    arr = k3.VarArray(2)
+    arr[0].value = panel
+    if k3.getpan6par(1, arr) < 0:
+        return result
+    else:
+        if arr[1].value > 0:
+            return result
+        else:
+            arr = k3.VarArray(5)
+            panel_sides = ['D', '2', 'C', '3', 'E', '4', 'B', '1']
+            for count, value in enumerate(panel_sides):
+                arr[0].value = count
+                k3.getpan6par(3, arr)
+                if arr[1].value > 0:
+                    result.append(value)
+    return result
