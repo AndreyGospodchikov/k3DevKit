@@ -93,3 +93,40 @@ def body_select(body, stayblink=0, partly=0, byattr=0, filter=''):
         k3.selbyattr(byattr_parameters)
     selected_list = select_to_list()
     return [obj for obj in selected_list if k3.distance(k3.k_object, body, k3.k_object, obj) == 0]
+
+
+def get_attributes(object):
+    """Возвращает словарь назначенных на объект атрибутов."""
+    result = {}
+    attr_quantity = k3.attrnmscan("attr_array", object)
+    if attr_quantity == 0:
+        return {}
+    attr_array = k3.VarArray(int(attr_quantity))
+    for attr in attr_array:
+        attr_name = attr.value
+        attr_type = k3.attrtype(attr_name)
+        if attr_type < 4:
+            result[attr_name] = k3.getattr(object, attr_name, 'NotDefined')
+        if attr_type == 4:
+            str_quantity = k3.getattrtext(object, attr_name, 'str_array')
+            if str_quantity > 0:
+                str_array = k3.VarArray(int(str_quantity))
+                contents = []
+                for str in str_array:
+                    contents.append(str.value)
+                result[attr_name] = contents
+    return result
+
+
+def attach_attributes(object, attributes):
+    """Присваивает объекту object те атрибуты из словаря attributes, которые были определены"""
+    for attr_name, value in attributes.items():
+        if k3.isattrdef(attr_name):
+            if k3.attrtype(attr_name) == 4:
+                k3.textbystr(object, attr_name, len(value), list_to_k3(value))
+            else:
+                if k3.isassign(attr_name, object):
+                    k3.attrobj(k3.k_edit, k3.k_partly, object, attr_name, k3.k_done, value)
+                else:
+                    k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
+
