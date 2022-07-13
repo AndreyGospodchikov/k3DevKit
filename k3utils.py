@@ -145,7 +145,7 @@ def check_band(panel):
             arr = k3.VarArray(5)
             panel_sides = ['D', '2', 'C', '3', 'E', '4', 'B', '1']
             for count, value in enumerate(panel_sides):
-                arr[0].value = count
+                arr[0].value = count+1
                 k3.getpan6par(3, arr)
                 if arr[1].value > 0:
                     result.append(value)
