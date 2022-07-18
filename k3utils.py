@@ -51,9 +51,9 @@ def materials_from_subst(subst):
     """Возвращает список с номерами материалов номенклатуры из заданной группы подстановки"""
     result = []
     arr = k3.VarArray(1, 'arr')
-    items_number = k3.npgetbywgere(1, '', 'arr', subst)
+    items_number = k3.npgetbywhere(1, '', 'arr', subst)
     arr = k3.VarArray(int(items_number), 'arr')
-    items_number = k3.npgetbywgere(1, '', 'arr', subst)
+    items_number = k3.npgetbywhere(1, '', 'arr', subst)
     for member in arr:
         result.append(int(member.value))
     return result
@@ -120,15 +120,16 @@ def get_attributes(object):
 
 def attach_attributes(object, attributes):
     """Присваивает объекту object те атрибуты из словаря attributes, которые были определены"""
-    for attr_name, value in attributes.items():
-        if k3.isattrdef(attr_name):
-            if k3.attrtype(attr_name) == 4:
-                k3.textbystr(object, attr_name, len(value), list_to_k3(value))
-            else:
-                if k3.isassign(attr_name, object):
-                    k3.attrobj(k3.k_edit, k3.k_partly, object, attr_name, k3.k_done, value)
+    if isinstance(attributes, dict):
+        for attr_name, value in attributes.items():
+            if k3.isattrdef(attr_name):
+                if k3.attrtype(attr_name) == 4:
+                    k3.textbystr(object, attr_name, len(value), list_to_k3(value))
                 else:
-                    k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
+                    if k3.isassign(attr_name, object):
+                        k3.attrobj(k3.k_edit, k3.k_partly, object, attr_name, k3.k_done, value)
+                    else:
+                        k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
 
 
 def check_band(panel):
@@ -149,4 +150,5 @@ def check_band(panel):
                 k3.getpan6par(3, arr)
                 if arr[1].value > 0:
                     result.append(value)
+    k3.getpan6par(999, arr)
     return result
