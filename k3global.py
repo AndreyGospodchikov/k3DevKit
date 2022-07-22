@@ -27,7 +27,6 @@ def get_global_list(names):
     """ѕолучает список имЄн, возвращает список значений глобальных переменных в том же пор€дке"""
     result = []
     for name_ in names:
-        print(name_)
         result.append(get_global(name_))
     return result
 
