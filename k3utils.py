@@ -10,6 +10,7 @@ def check_furntype(object, target):
 
     checks = {
         'panel': 'furntype[:2] == \'01\' and not furntype[2:] == \'0000\'',
+        'wall': 'furntype[:4] == \'0103\'',
         'profile': 'furntype[:2] == \'02\'',
         'long': 'furntype[:2] == \'03\'',
         'accessory': 'furntype[:2] == \'04\'',
@@ -60,7 +61,7 @@ def materials_from_subst(subst):
 
 
 def print_name(object):
-    """Возвращает содержимое атрибута ElemName объекта"""
+    """Выводит содержимое атрибута ElemName объекта"""
     name = k3.getattr(object, 'ElemName', 'No ElemName')
     print(name)
 
@@ -118,18 +119,28 @@ def get_attributes(object):
     return result
 
 
+def list_to_k3arr(income):
+    """Возвращает массив к3, заполненный элементами множества income"""
+    if isinstance(income, list or tuple):
+        if income:
+            k3arr = k3.VarArray(len(income))
+            for position, smth in enumerate(income):
+                k3arr[position].value = smth
+            return k3arr
+    return False
+
+
 def attach_attributes(object, attributes):
     """Присваивает объекту object те атрибуты из словаря attributes, которые были определены"""
-    if isinstance(attributes, dict):
-        for attr_name, value in attributes.items():
-            if k3.isattrdef(attr_name):
-                if k3.attrtype(attr_name) == 4:
-                    k3.textbystr(object, attr_name, len(value), list_to_k3(value))
+    for attr_name, value in attributes.items():
+        if k3.isattrdef(attr_name):
+            if k3.attrtype(attr_name) == 4:
+                k3.textbystr(object, attr_name, len(value), list_to_k3arr(value))
+            else:
+                if k3.isassign(attr_name, object):
+                    k3.attrobj(k3.k_edit, k3.k_partly, object, attr_name, k3.k_done, value)
                 else:
-                    if k3.isassign(attr_name, object):
-                        k3.attrobj(k3.k_edit, k3.k_partly, object, attr_name, k3.k_done, value)
-                    else:
-                        k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
+                    k3.attrobj(k3.k_attach, attr_name, k3.k_done, k3.k_partly, object, value)
 
 
 def check_band(panel):
@@ -150,5 +161,13 @@ def check_band(panel):
                 k3.getpan6par(3, arr)
                 if arr[1].value > 0:
                     result.append(value)
-    k3.getpan6par(999, arr)
     return result
+
+
+# def get_ud(variables):
+#    """Получает список имён переменных, возвращает словарь с именем переменной умолчания
+#        и текущим значением, исключая имена, которых нет"""
+#    result = {}
+#    if isinstance(variables, list or tuple):
+#        for variable_name in variables:
+#            if isinstance(variable_name, str):
